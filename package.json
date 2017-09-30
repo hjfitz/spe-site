@@ -1,0 +1,13 @@
+{
+  "name": "boiler",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "contentful": "^4.6.2",
+    "express": "^4.15.4"
+  }
+}
