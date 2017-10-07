@@ -1,0 +1,4 @@
+{{{description}}} {{#each members}}
+<h4>{{this.name}}</h4>
+<div>{{{this.parsed}}}</div>
+<img alt={{this.image.fields.title}} src="https:{{this.image.fields.file.url}}"> {{/each}}
