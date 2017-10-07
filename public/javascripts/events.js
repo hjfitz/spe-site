@@ -32,7 +32,7 @@ const generateEvents = ev => {
 
   // set the container innards
   container.innerHTML = 
-    `<h2>${title}</h2>
+    `<h4>${title}</h4>
     <div>${marked(description)}</div>`;
 
   // generate the image slider

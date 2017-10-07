@@ -16,7 +16,7 @@ const generateSection = sectionInfo => {
   // generate containers
   const contentContainer = document.createElement('div');
   const container = document.createElement('section');
-  const header = document.createElement('h2');
+  const header = document.createElement('h4');
 
   // append to main container
   container.appendChild(header);
