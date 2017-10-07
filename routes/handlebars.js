@@ -15,11 +15,15 @@ const client = contentful.createClient({
   accessToken: process.env.CONTENTFUL_ACCESS,
 });
 
+const getFields = async pageType => {
+  const data = await client.getEntries({ 'content_type': pageType });
+  const pageInfo = data.items[0].fields;
+  return pageInfo;
+};
+
 
 render.get('/', async (req, res) => {
-  const data = await client.getEntries({ 'content_type': 'homePage' });
-  // there should only exist one homepage item
-  const pageInfo = data.items[0].fields;
+  const pageInfo = await getFields('homePage');
   const { title, sections } = pageInfo;
 
   // pull the fields out of the sections
@@ -38,8 +42,7 @@ render.get('/', async (req, res) => {
 });
 
 render.get('/about', async (req, res) => {
-  const data = await client.getEntries({ 'content_type': 'aboutPage' });
-  const pageInfo = data.items[0].fields;
+  const pageInfo = await getFields('aboutPage');
   const { title, optionalDescription, committeeMembers } = pageInfo;
   const description = marked(optionalDescription);
   const memberFields = committeeMembers
@@ -53,12 +56,24 @@ render.get('/about', async (req, res) => {
     title,
     description,
     members: memberFields,
+    about: 'active'
   });
 });
 
-render.get('/events', (req, res) => {
-  res.render(`pages/index.handlebars`, {
-    selectedPage: 'events',
+render.get('/events', async (req, res) => {
+  const data = await getFields('eventsPage');
+  const { title, events } = data;
+  const parsedEvents = events
+    .map(ev => ev.fields)
+    .map(fields => {
+      const { title, images, description } = fields;
+      const parsedDesc = marked(description);
+      return { title, images, parsedDesc };
+    });
+  res.render(`pages/events.handlebars`, {
+    events: 'active',
+    title,
+    parsedEvents,
   });
 });
 

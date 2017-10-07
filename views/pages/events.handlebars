@@ -1,0 +1,19 @@
+{{#each parsedEvents}}
+<section>
+  <h4>{{this.title}}</h4>
+  <div>{{{this.parsedDesc}}}</div>
+  <div class='slider'>
+    <ul class='slides'>
+      {{#each this.images}}
+      <li>
+        <img src="https:{{this.fields.file.url}}" alt="{{this.fields.title}}">
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</section>
+{{/each}}
+
+<script>
+  $('.slider').slider();
+</script>

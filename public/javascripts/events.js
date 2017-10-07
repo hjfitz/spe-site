@@ -23,22 +23,22 @@ const generateEvents = ev => {
   imageContainer.classList = 'slider';
   imageContainer.appendChild(imageList);
   imageList.classList = 'slides';
-  
+
   // destructure to get the title and desc
-  const { title, description } = ev.fields;  
+  const { title, description } = ev.fields;
   const images = [];
   // check if there exist images - they're *optional* on contentful
   if ('images' in ev.fields) images.push(...ev.fields.images);
 
   // set the container innards
-  container.innerHTML = 
+  container.innerHTML =
     `<h4>${title}</h4>
     <div>${marked(description)}</div>`;
 
   // generate the image slider
   images.forEach(image => {
     const img = document.createElement('li');
-    const { file, title } = image.fields;    
+    const { file, title } = image.fields;
     img.innerHTML = `<img src=${file.url} alt=${title} />`
     imageList.appendChild(img);
   });
@@ -52,5 +52,5 @@ window.onload = async () => {
   const { title, events } = data;
   pageTitle.textContent = title;
   events.map(generateEvents);
-  $('.slider').slider();  
+  $('.slider').slider();
 };
