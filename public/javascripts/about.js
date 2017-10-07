@@ -28,7 +28,7 @@ const generatePage = committeeMembers => {
       const { file, title } = image.fields;   
       const container = document.createElement('div');
       container.innerHTML = 
-        `<h3>${name}</h3>
+        `<h4>${name}</h4>
         <div>${marked(description)}</div>
         <img alt="${title}" src="https:${file.url}" />`;
       return container;

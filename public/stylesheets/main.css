@@ -15,3 +15,8 @@ img {
 .indicator-item.active {
 	background-color: #4a148c!important;
 }
+
+#title {
+	color: #4a148c!important;
+	font-weight: 300;
+}
