@@ -13,23 +13,35 @@ const getInformation = async () => {
 };
 
 const generateEvents = ev => {
-  const imageContainer = document.createElement('div');
+  // validation for drafts
+  if (!('fields' in ev && 'title' in ev.fields && 'description' in ev.fields)) return;
   const container = document.createElement('section');
-  const descContainer = document.createElement('div');
-  const header = document.createElement('h2');
-  const { title, description, images } = ev.fields;
-  const parsedDesc = marked(description);
-  descContainer.innerHTML = parsedDesc;
-  header.textContent = title;
+
+  // image slider
+  const imageContainer = document.createElement('div');
+  const imageList = document.createElement('ul');
+  imageContainer.classList = 'slider';
+  imageContainer.appendChild(imageList);
+  imageList.classList = 'slides';
+  
+  // destructure to get the title and desc
+  const { title, description } = ev.fields;  
+  const images = [];
+  // check if there exist images - they're *optional* on contentful
+  if ('images' in ev.fields) images.push(...ev.fields.images);
+
+  // set the container innards
+  container.innerHTML = 
+    `<h2>${title}</h2>
+    <div>${marked(description)}</div>`;
+
+  // generate the image slider
   images.forEach(image => {
-    const img = document.createElement('img');
-    const { file, title } = image.fields;
-    img.alt = title;
-    img.src = `https:${file.url}`;
-    imageContainer.appendChild(img);
+    const img = document.createElement('li');
+    const { file, title } = image.fields;    
+    img.innerHTML = `<img src=${file.url} alt=${title} />`
+    imageList.appendChild(img);
   });
-  container.appendChild(header);
-  container.appendChild(descContainer);
   container.appendChild(imageContainer);
   content.appendChild(container);
 };
@@ -40,4 +52,5 @@ window.onload = async () => {
   const { title, events } = data;
   pageTitle.textContent = title;
   events.map(generateEvents);
+  $('.slider').slider();  
 };
