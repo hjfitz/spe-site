@@ -1,0 +1,10 @@
+ {{#each sections}}
+<section>
+  <h4>{{this.title}}</h4>
+</section>
+{{{parsed}}} {{#if this.images}}
+<div>
+  {{#each this.images}}
+  <img alt="{{this.fields.title}}" src="https:{{this.fields.file.url}}"> {{/each}}
+</div>
+{{/if}} {{/each}}
