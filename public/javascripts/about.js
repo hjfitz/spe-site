@@ -6,31 +6,34 @@ const endPoint = '/contentful/aboutPage';
 // hit an endpoint and get the page information
 const getInformation = async () => {
   const raw = await fetch(endPoint);
-  // parse
   const data = await raw.json();
   return data;
 };
 
+
+/**
+ * Create DOM elements to store committee members
+ * Extract the fields from the response 
+ * Create a div, and create the innerHTML accordingly
+ * Append that to the main member container
+ * @param {Array} committeeMembers list of committee member information
+ * @return {DOMElement} A <section> containing our members
+ */
 const generatePage = committeeMembers => {
-  const memberFields = committeeMembers.map(member => member.fields);
   const membersContainer = document.createElement('section');
-  memberFields.forEach(field => {
-    const container = document.createElement('div');
-    const { name, description, image } = field;
-    const nameContainer = document.createElement('h3');
-    const descContainer = document.createElement('div');
-    const img = document.createElement('img');
-    const parsedDesc = marked(description);
-    const { file, title } = image.fields;
-    nameContainer.textContent = name;
-    descContainer.innerHTML = parsedDesc;
-    img.alt = title;
-    img.src = `http:${file.url}`;
-    container.appendChild(nameContainer);
-    container.appendChild(descContainer);
-    container.appendChild(img);
-    membersContainer.appendChild(container);
-  });
+  committeeMembers
+    .map(member => member.fields)
+    .map(fields => {
+      const { name, description, image } = fields;   
+      const { file, title } = image.fields;   
+      const container = document.createElement('div');
+      container.innerHTML = 
+        `<h3>${name}</h3>
+        <div>${marked(description)}</div>
+        <img alt="${title}" src="https:${file.url}" />`;
+      return container;
+    })
+    .map(container => membersContainer.appendChild(container));
   return membersContainer;
 };
 
@@ -47,7 +50,4 @@ window.onload = async () => {
   // set the innerHTML as marked return a string and not a domlist
   content.innerHTML = parsedInfo;
   content.appendChild(parsedMembers);
-
-
-
 };

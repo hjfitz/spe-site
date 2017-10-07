@@ -11,3 +11,7 @@ main {
 img {
 	max-width: 100%;
 }
+
+.indicator-item.active {
+	background-color: #4a148c!important;
+}
