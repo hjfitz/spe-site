@@ -48,9 +48,11 @@ render.get('/about', async (req, res) => {
   const memberFields = committeeMembers
     .map(member => member.fields)
     .map(fields => {
-      const { name, image, description } = fields;
-      const parsed = marked(description);
-      return { name, image, parsed };
+      if (fields && 'image' in fields && 'name' in fields && 'description' in fields) {
+        const { name, image, description } = fields;
+        const parsed = marked(description);
+        return { name, image, parsed };
+      }
     });
   res.render(`pages/about.handlebars`, {
     title,
