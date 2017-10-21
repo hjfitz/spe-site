@@ -1,6 +1,7 @@
 const express = require('express');
 const hbs = require('express-handlebars')
 const path = require('path');
+require('dotenv').load();
 
 const app = express();
 const port = process.env.PORT || 5000;

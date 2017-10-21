@@ -28,6 +28,7 @@ render.get('/', async (req, res) => {
 
   // pull the fields out of the sections
   const sectionFields = sections
+    .filter(entry => 'fields' in entry)
     .map(sec => sec.fields)
     .map(fields => {
       const { title, content, images } = fields;
@@ -46,13 +47,12 @@ render.get('/about', async (req, res) => {
   const { title, optionalDescription, committeeMembers } = pageInfo;
   const description = marked(optionalDescription);
   const memberFields = committeeMembers
+    .filter(entry => 'fields' in entry)
     .map(member => member.fields)
     .map(fields => {
-      if (fields && 'image' in fields && 'name' in fields && 'description' in fields) {
-        const { name, image, description } = fields;
-        const parsed = marked(description);
-        return { name, image, parsed };
-      }
+      const { name, image, description } = fields;
+      const parsed = marked(description);
+      return { name, image, parsed };
     });
   res.render(`pages/about.handlebars`, {
     title,
@@ -66,6 +66,7 @@ render.get('/events', async (req, res) => {
   const data = await getFields('eventsPage');
   const { title, events } = data;
   const parsedEvents = events
+    .filter(entry => 'fields' in entry)
     .map(ev => ev.fields)
     .map(fields => {
       const { title, images, description } = fields;

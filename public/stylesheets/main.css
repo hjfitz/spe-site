@@ -20,3 +20,37 @@ img {
 	color: #4a148c!important;
 	font-weight: 300;
 }
+
+.committee-member-image {
+	max-width: 320px;
+	height: auto;
+	padding: 1rem;
+}
+
+.f-row {
+	display: flex;
+}
+
+.f-col.md4 {
+	flex-basis: 33%;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.f-col.md8 {
+	flex-basis: 66%;
+}
+
+.show-member-role { display: none; }
+
+@media screen and (max-width: 992px) {
+	.f-row {
+		flex-direction: column-reverse;
+	}
+
+	.show-member-role {
+		display: block;
+	}
+}
