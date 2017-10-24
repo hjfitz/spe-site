@@ -1,7 +1,7 @@
-# Boilerplate-Express
-Generic Express.js boilerplate, set up for HTML
+# SPE Site
+Built in 2017 for the UoP's Petroleum Engineers
 
-# Setup
+Content driven via [Contentful](https://contentful.com)
 
-1. `yarn install`
-
+## Running
+Ensure that your `.env` is configured correctly and `yarn install`. Run locally with `heroku local`.
