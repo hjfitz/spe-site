@@ -9,7 +9,7 @@
   "dependencies": {
     "contentful": "^4.6.2",
     "dotenv": "^4.0.0",
-    "eslint": "^4.8.0",
+    "eslint": "^4.18.2",
     "express": "^4.15.4",
     "express-handlebars": "^3.0.0",
     "marked": "^0.3.6"
